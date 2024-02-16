@@ -11,10 +11,11 @@ from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
-
+import uuid
 
 @register_snippet
 class BlogCategory(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     icon = models.ForeignKey(
         'wagtailimages.Image', null=True, blank=True,
@@ -55,6 +56,7 @@ class BlogIndexPage(Page):
 
 
 class BlogPageTag(TaggedItemBase):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     content_object = ParentalKey(
         'BlogPage',
         related_name='tagged_items',
@@ -80,6 +82,7 @@ class BlogPage(Page):
     api_fields = [
         APIField("intro"),
         APIField("body"),
+        APIField("date"),
     ]
 
     search_fields = Page.search_fields + [
@@ -103,6 +106,7 @@ class BlogPage(Page):
 
 
 class BlogPageGalleryImage(Orderable):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='gallery_images')
     image = models.ForeignKey(
         'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
@@ -115,7 +119,6 @@ class BlogPageGalleryImage(Orderable):
     ]
 
 class BlogTagIndexPage(Page):
-
     def get_context(self, request):
 
         # Filter by tag

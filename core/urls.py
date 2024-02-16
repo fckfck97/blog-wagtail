@@ -38,4 +38,3 @@ urlpatterns = urlpatterns + [
     # of your site, rather than the site root:
     #    path("pages/", include(wagtail_urls)),
 ]
-# urlpatterns += [re_path(r'^.*', never_cache(TemplateView.as_view(template_name='index.html')))]
