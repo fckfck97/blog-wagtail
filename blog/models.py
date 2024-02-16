@@ -39,6 +39,9 @@ class BlogIndexPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('intro')
     ]
+    api_fields = [
+        APIField('intro'),
+    ]
 
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
@@ -57,6 +60,7 @@ class BlogPageTag(TaggedItemBase):
         related_name='tagged_items',
         on_delete=models.CASCADE
     )
+    
 
 
 class BlogPage(Page):

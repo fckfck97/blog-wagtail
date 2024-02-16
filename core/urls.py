@@ -9,7 +9,9 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 from core.api import api_router
-
+from django.views.decorators.cache import never_cache
+from django.views.generic import TemplateView
+from django.urls import re_path
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
@@ -36,3 +38,4 @@ urlpatterns = urlpatterns + [
     # of your site, rather than the site root:
     #    path("pages/", include(wagtail_urls)),
 ]
+# urlpatterns += [re_path(r'^.*', never_cache(TemplateView.as_view(template_name='index.html')))]
